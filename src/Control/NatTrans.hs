@@ -3,7 +3,7 @@ module Control.NatTrans where
 
 import Prelude hiding ((.), id)
 import Control.Category
-import qualified Data.Maybe as Maybe
+import qualified Data.Maybe as Maybe (listToMaybe, maybeToList)
 
 
 newtype NatTrans f g = NT { runNT :: forall a . f a -> g a }
