@@ -1,0 +1,14 @@
+TODO
+
+ - hlint
+ - Wall Werror
+ - test-suite
+ - example
+ - automatic code formatings
+ - makefile htags etc
+ - check allowed language extensions
+ - separate src and example directories
+ - use hpack to generate cabal file
+ - create stack project
+ - set-up CI build
+ - backends should be separated in their own packages
