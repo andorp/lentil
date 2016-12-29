@@ -19,23 +19,34 @@ import Language.Haskell.TH
 --
 makeElim :: Name -> Q [Dec]
 makeElim t = do
-  TyConI (DataD _ tname _ constructors _) <- reify t
-  let consElimPat (NormalC name _) = VarP . mkName . map toLower $ nameBase name
+  tyCon <- reify t
+  let (tname, constructors) =
+        case tyCon of
+          TyConI (DataD _ tname _ constructors _)   -> (tname, constructors)
+          TyConI (NewtypeD _ tname _ constructor _) -> (tname, [constructor])
+
+  let consName (NormalC n _)   = n
+      consName (RecC n _)      = n
+      consName (InfixC _ n _)  = n
+      consName (ForallC _ _ c) = consName c
+
+      consElimPat = VarP . mkName . deCapitalize . nameBase . consName
 
       consPatterns = consElimPat <$> constructors
 
       elimClause (NormalC name fields) = do
-        let constructorName = mkName . map toLower $ nameBase name
+        let constructorName = mkName . deCapitalize $ nameBase name
         (pats, vars) <- genPE (length fields)
         return $ Clause (consPatterns ++ [ConP name pats])
                         (NormalB (foldl' AppE (VarE constructorName) vars))
                         []
 
   elimBody <- mapM elimClause constructors
-  let elimName = mkName $ (toLower <$> nameBase tname) ++ "Elim"
+  let elimName = mkName . deCapitalize $ nameBase tname ++ "Elim"
   return [FunD elimName elimBody]
 
   where
+    deCapitalize (x:xs) = toLower x : xs
     genPE n = do
       ids <- replicateM n (newName "x")
       return (VarP <$> ids, VarE <$> ids)
