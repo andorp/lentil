@@ -32,7 +32,7 @@ set' :: Monad m => MonadLens m Identity s t a b -> b -> s -> m t
 set' c b = over' c (const b)
 
 entityLens :: Monad backend
-           => Entity backend key e r -> EntityLens' backend (key e) r
+           => Entity backend key entity result -> EntityLens' backend (key entity) result
 entityLens handler focus entityKey = Compose $ do
   e  <- loadEntity handler entityKey
   fe <- getCompose (focus e)
