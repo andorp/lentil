@@ -1,0 +1,29 @@
+name:                lentil
+version:             0.1.0.0
+synopsis:            Handle database entities via lens abstraction.
+description:         Please see README.md
+homepage:            http://github.com/andorp/lentils
+license:             BSD3
+license-file:        LICENSE
+author:
+  - Andor Penzes <andor.penzes@gmail.com>
+maintainer:          andor.penzes@gmail.com
+copyright:           2016- Andor Penzes
+category:            Database
+
+ghc-options: []
+
+dependencies:
+  - base
+  - lens
+  - transformers
+  - time
+  - mtl
+  - sqlite-simple
+  - containers
+  - template-haskell
+
+library:
+  source-dirs:
+    - src
+    - test
