@@ -11,7 +11,9 @@ maintainer:          andor.penzes@gmail.com
 copyright:           2016- Andor Penzes
 category:            Database
 
-ghc-options: []
+ghc-options:
+  - -Werror
+  - -Wall
 
 default-extensions:
   - TypeOperators

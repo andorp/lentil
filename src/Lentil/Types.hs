@@ -4,6 +4,7 @@ module Lentil.Types (
     Entity(..)
   , EntityLens
   , EntityLens'
+  , EntityTraversal
   , MonadLens
   , MonadLens'
   , LifeCycle(..)
@@ -21,7 +22,7 @@ type MonadLens m f s t a b = LensLike (C m f) s t a b
 type MonadLens' m f s a = MonadLens m f s s a a
 
 type EntityLens backend s t a b
-  = forall f . (Functor f, Traversable f)
+  = forall f . Traversable f
              => MonadLens backend f s t a b
 
 type EntityTraversal backend s t a b

@@ -22,13 +22,15 @@ makeElim t = do
   tyCon <- reify t
   let (tname, constructors) =
         case tyCon of
-          TyConI (DataD _ tname _ _ constructors _)   -> (tname, constructors)
-          TyConI (NewtypeD _ tname _ _ constructor _) -> (tname, [constructor])
+          TyConI (DataD _ tname' _ _ constructors' _)   -> (tname', constructors')
+          TyConI (NewtypeD _ tname' _ _ constructor' _) -> (tname', [constructor'])
+          bad -> error $ "makeElim: unsupported type constructor " ++ show bad
 
   let consName (NormalC n _)   = n
       consName (RecC n _)      = n
       consName (InfixC _ n _)  = n
       consName (ForallC _ _ c) = consName c
+      consName bad             = error $ "makeElim consName: unsupported type constructor " ++ show bad
 
       consElimPat = VarP . mkName . deCapitalize . nameBase . consName
 
@@ -40,12 +42,14 @@ makeElim t = do
         return $ Clause (consPatterns ++ [ConP name pats])
                         (NormalB (foldl' AppE (VarE constructorName) vars))
                         []
+      elimClause bad = error $ "makeElim elimClause: unsupported constructor " ++ show bad
 
   elimBody <- mapM elimClause constructors
   let elimName = mkName . deCapitalize $ nameBase tname ++ "Elim"
   return [FunD elimName elimBody]
 
   where
+    deCapitalize []     = error "deCapitalize got empty name"
     deCapitalize (x:xs) = toLower x : xs
     genPE n = do
       ids <- replicateM n (newName "x")

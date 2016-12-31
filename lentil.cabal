@@ -20,6 +20,7 @@ library
   hs-source-dirs:
       src
   default-extensions: TypeOperators
+  ghc-options: -Werror -Wall
   build-depends:
       base >= 4.9
     , containers

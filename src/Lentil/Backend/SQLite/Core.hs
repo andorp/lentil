@@ -5,14 +5,12 @@ module Lentil.Backend.SQLite.Core (
   , sqlite
   , sqliteIO
   , sqliteConn
-  , module SQLite
   ) where
 
 import Control.Natural
 import Control.Monad.Reader
 import Data.Int (Int64)
 import qualified Database.SQLite.Simple         as SQLite
-import qualified Database.SQLite.Simple.FromRow as SQLite
 
 newtype ID a = ID { _unID :: Int64 }
   deriving (Eq, Show)

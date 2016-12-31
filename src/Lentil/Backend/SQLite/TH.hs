@@ -5,16 +5,10 @@ module Lentil.Backend.SQLite.TH where
 -- TODO: Add Template Haskell approach
 -- Converts the description of the datatype to the entity descriptionn
 
-import Control.Monad
-import Data.List (foldl')
 import Language.Haskell.TH
-import Language.Haskell.TH.Syntax
-
-import Control.Elim
 import Lentil.Backend.SQLite.Core
 import Lentil.Core
 import Lentil.SQL.TH
-import Lentil.Types
 
 {-
 Template Haskell solution:
@@ -62,3 +56,43 @@ makeEntity name = do
     , entitySig
     , entityDef
     ]
+
+{-
+loadEntry :: ID Entry -> SQLite Entry
+loadEntry pk = do
+  conn <- sqliteConn
+  r <- sqliteIO $ queryNamed
+        conn "SELECT note, start, end, sheet FROM entries WHERE id=:eid"
+             [":eid" := _unID pk]
+  case r of
+    [r@(n,st,e,sh)] -> pure $ fromTuple r
+    _               -> error "loadEntry returned not one line."
+
+updateEntry :: ID Entry -> Entry -> SQLite ()
+updateEntry pk (Entry n st e sh) = do
+  conn <- sqliteConn
+  sqliteIO $ executeNamed conn
+    "UPDATE entries SET note=:n, start=:st, end=:e, sheet=:sh WHERE id=:eid"
+    [":n" := n, ":st" := st, ":e" := e, ":sh" := sh, ":eid" := _unID pk]
+
+entry :: EntityLens' SQLite (ID Entry) Entry
+entry = entityLens $ Entity { loadEntity = loadEntry, updateEntity = updateEntry }
+-}
+
+{-
+curryN :: Int -> Q Exp
+curryN n = do
+  f <- newName "f"
+  xs <- replicateM n (newName "x")
+  let args = map VarP (f:xs)
+      ntup = TupE (map VarE xs)
+  return $ LamE args (AppE (VarE f) ntup)
+
+genCurries :: Int -> Q [Dec]
+genCurries n = forM [1..n] mkCurryDec
+  where
+    mkCurryDec ith = do
+      cury <- curryN ith
+      let name = mkName $ "curry" ++ show ith
+      return $ FunD name [Clause [] (NormalB cury) []]
+-}
