@@ -19,18 +19,19 @@ cabal-version:  >= 1.10
 library
   hs-source-dirs:
       src
+  default-extensions: TypeOperators
   build-depends:
       base >= 4.9
-    , lens
-    , transformers
-    , time
-    , mtl
-    , sqlite-simple
     , containers
+    , lens
+    , mtl
+    , natural-transformation
+    , sqlite-simple
     , template-haskell
+    , time
+    , transformers
   exposed-modules:
       Control.Elim
-      Control.NatTrans
       Lentil.Backend.SQLite.Core
       Lentil.Backend.SQLite.TH
       Lentil.Core

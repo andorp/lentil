@@ -13,16 +13,19 @@ category:            Database
 
 ghc-options: []
 
+default-extensions:
+  - TypeOperators
+
 dependencies:
   - base >= 4.9
-  - lens
-  - transformers
-  - time
-  - mtl
-  - sqlite-simple
   - containers
+  - lens
+  - mtl
+  - natural-transformation
+  - sqlite-simple
   - template-haskell
-
+  - time
+  - transformers
 
 library:
   source-dirs:
