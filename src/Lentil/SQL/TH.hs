@@ -30,8 +30,8 @@ sqlCommands' t = do
   tyCon <- reify t
   let (tname, [constructor]) =
         case tyCon of
-          TyConI (DataD _ tname _ constructors _)   -> (tname, constructors)
-          TyConI (NewtypeD _ tname _ constructor _) -> (tname, [constructor])
+          TyConI (DataD _ tname _ _ constructors _)   -> (tname, constructors)
+          TyConI (NewtypeD _ tname _ _ constructor _) -> (tname, [constructor])
 
   let RecC cname fields = constructor
       typeName    = deCapitalize $ nameBase tname

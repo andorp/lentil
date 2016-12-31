@@ -22,8 +22,8 @@ makeElim t = do
   tyCon <- reify t
   let (tname, constructors) =
         case tyCon of
-          TyConI (DataD _ tname _ constructors _)   -> (tname, constructors)
-          TyConI (NewtypeD _ tname _ constructor _) -> (tname, [constructor])
+          TyConI (DataD _ tname _ _ constructors _)   -> (tname, constructors)
+          TyConI (NewtypeD _ tname _ _ constructor _) -> (tname, [constructor])
 
   let consName (NormalC n _)   = n
       consName (RecC n _)      = n
