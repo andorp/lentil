@@ -19,9 +19,8 @@ cabal-version:  >= 1.10
 library
   hs-source-dirs:
       src
-    , test
   build-depends:
-      base
+      base-4.9.0.0
     , lens
     , transformers
     , time
@@ -37,7 +36,4 @@ library
       Lentil.Core
       Lentil.SQL.TH
       Lentil.Types
-      Control.Elim.Test
-      Lentil.Backend.SQLite.Test
-      Lentil.SQL.Test
   default-language: Haskell2010

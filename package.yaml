@@ -14,7 +14,7 @@ category:            Database
 ghc-options: []
 
 dependencies:
-  - base
+  - base-4.9.0.0
   - lens
   - transformers
   - time
@@ -23,7 +23,7 @@ dependencies:
   - containers
   - template-haskell
 
+
 library:
   source-dirs:
     - src
-    - test
