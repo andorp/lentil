@@ -20,7 +20,7 @@ library
   hs-source-dirs:
       src
   build-depends:
-      base-4.9.0.0
+      base >= 4.9
     , lens
     , transformers
     , time
