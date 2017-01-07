@@ -1,4 +1,4 @@
--- This file has been generated from package.yaml by hpack version 0.14.1.
+-- This file has been generated from package.yaml by hpack version 0.14.0.
 --
 -- see: https://github.com/sol/hpack
 
@@ -24,6 +24,7 @@ library
   build-depends:
       base >= 4.9
     , containers
+    , elim
     , lens
     , mtl
     , natural-transformation
@@ -32,7 +33,6 @@ library
     , time
     , transformers
   exposed-modules:
-      Control.Elim
       Lentil.Backend.SQLite.Core
       Lentil.Backend.SQLite.TH
       Lentil.Core

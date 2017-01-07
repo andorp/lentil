@@ -21,6 +21,7 @@ default-extensions:
 dependencies:
   - base >= 4.9
   - containers
+  - elim
   - lens
   - mtl
   - natural-transformation

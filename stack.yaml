@@ -2,6 +2,9 @@ resolver: lts-7.14
 
 packages:
 - '.'
+- location:
+    git: http://github.com/andorp/elim
+    commit: 558fc65a4033577092214c5e2defd47805678b97
 
 extra-deps: []
 
