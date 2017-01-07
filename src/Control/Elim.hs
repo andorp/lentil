@@ -36,13 +36,16 @@ makeElim t = do
 
       consPatterns = consElimPat <$> constructors
 
-      elimClause (NormalC name fields) = do
+      elimClause con = do
+        let (name, noOfFields) = case con of
+              (RecC n fs)    -> (n, length fs)
+              (NormalC n fs) -> (n, length fs)
+              bad            -> error $ "makeElim elimClause: unsupported constructor " ++ show bad
         let constructorName = mkName . deCapitalize $ nameBase name
-        (pats, vars) <- genPE (length fields)
+        (pats, vars) <- genPE noOfFields
         return $ Clause (consPatterns ++ [ConP name pats])
                         (NormalB (foldl' AppE (VarE constructorName) vars))
                         []
-      elimClause bad = error $ "makeElim elimClause: unsupported constructor " ++ show bad
 
   elimBody <- mapM elimClause constructors
   let elimName = mkName . deCapitalize $ nameBase tname ++ "Elim"
