@@ -21,7 +21,7 @@ newtype SQLite a = SQLite { unSQL :: ReaderT SQLite.Connection IO a }
 sqlite :: String -> IO (SQLite :~> IO)
 sqlite dbname = do
   conn <- SQLite.open dbname
-  return (Nat ((`runReaderT` conn) . unSQL))
+  return (NT ((`runReaderT` conn) . unSQL))
 
 sqliteIO :: IO a -> SQLite a
 sqliteIO = SQLite . liftIO
